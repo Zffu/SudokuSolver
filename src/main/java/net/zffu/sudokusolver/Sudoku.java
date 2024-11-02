@@ -28,4 +28,30 @@ public class Sudoku {
         this.bitTrace = bitTrace;
     }
 
+    /**
+     * <p>Attempts to solve small stuff before the real solving.</p>
+     */
+    public void preSolve() {
+        preSolveArray(this.rows);
+        preSolveArray(this.columns);
+    }
+
+    /**
+     * <p>Attempts to pre-solve the given array.</p>
+     * @param array the array.
+     */
+    private void preSolveArray(byte[] array) {
+        int missing = 0;
+        for(int i = 0; i < 9; ++i) {
+            for(int num = 0; i < 9; ++i) {
+                if((array[i] & 1 << num) != 0) {
+                    if(missing != 0) return;
+                    missing = num;
+                }
+            }
+        }
+
+        System.out.println("Array is predictable! Only " + missing + " is missing!");
+    }
+
 }
